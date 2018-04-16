@@ -1,0 +1,14 @@
+img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto auto 15%;
+  display: none;
+  z-index: -10;
+}
+
+input[type="checkbox"]:checked + img {
+  display: block;
+}
