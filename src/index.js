@@ -48,57 +48,61 @@ class App extends React.Component {
 
   render() {
     return (
-      <Grid>
-        <Col xs={12} sm={6}>
-          <Row>
-            <Col xs={10} xsOffset={1}>
-              <ControlLabel>
-                <div style={{ position: "relative" }}>
-                  <input type="checkbox"
-                    checked={this.state.isSkillFixed}
-                    onChange={e => {
-                      this.setState({ isSkillFixed: e.target.checked });
-                    }}
-                    style={{ display: "none" }}
+      <Grid fluid={true}>
+        <Col xs={12}>
+          <Grid>
+            <Col xs={12} sm={6}>
+              <Row>
+                <Col xs={10} xsOffset={1}>
+                  <ControlLabel>
+                    <div style={{ position: "relative" }}>
+                      <input type="checkbox"
+                        checked={this.state.isSkillFixed}
+                        onChange={e => {
+                          this.setState({ isSkillFixed: e.target.checked });
+                        }}
+                        style={{ display: "none" }}
+                      />
+                      <img src={key} alt={"Locked"} />
+                      <CircularProgressbar
+                        percentage={100 * this.calcSkill() / 170.0}
+                        textForPercentage={_ => this.calcSkill().toFixed(2)}
+                      />
+                    </div>
+                  </ControlLabel>
+                </Col>
+              </Row>
+            </Col>
+            <Col xs={12} sm={6}>
+              <Row>
+                <Col xs={12}>
+                  {this.state.diff.toFixed(2)}
+                </Col>
+                <Col xs={12}>
+                  <Slider
+                    value={this.state.diff}
+                    min={DIFF_MIN}
+                    max={DIFF_MAX}
+                    step={0.05}
+                    onChange={this.handleChangeDiff.bind(this)}
                   />
-                  <img src={key} alt={"Locked"} />
-                  <CircularProgressbar
-                    percentage={100 * this.calcSkill() / 170.0}
-                    textForPercentage={_ => this.calcSkill().toFixed(2)}
+                </Col>
+                <Col xs={12}>
+                  {this.state.rate.toFixed(2)}
+                </Col>
+                <Col xs={12}>
+                  <Slider
+                    value={this.state.rate}
+                    min={RATE_MIN}
+                    max={RATE_MAX}
+                    step={0.01}
+                    marks={{63: "B", 73: "A", 80: "S", 95: "SS"}}
+                    onChange={this.handleChangeRate.bind(this)}
                   />
-                </div>
-              </ControlLabel>
+                </Col>
+              </Row>
             </Col>
-          </Row>
-        </Col>
-        <Col xs={12} sm={6}>
-          <Row>
-            <Col xs={12}>
-              {this.state.diff.toFixed(2)}
-            </Col>
-            <Col xs={12}>
-              <Slider
-                value={this.state.diff}
-                min={DIFF_MIN}
-                max={DIFF_MAX}
-                step={0.05}
-                onChange={this.handleChangeDiff.bind(this)}
-              />
-            </Col>
-            <Col xs={12}>
-              {this.state.rate.toFixed(2)}
-            </Col>
-            <Col xs={12}>
-              <Slider
-                value={this.state.rate}
-                min={RATE_MIN}
-                max={RATE_MAX}
-                step={0.01}
-                marks={{63: "B", 73: "A", 80: "S", 95: "SS"}}
-                onChange={this.handleChangeRate.bind(this)}
-              />
-            </Col>
-          </Row>
+          </Grid>
         </Col>
       </Grid>
     );
