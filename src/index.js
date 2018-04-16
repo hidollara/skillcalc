@@ -14,6 +14,26 @@ class App extends React.Component {
     }
   }
 
+  handleChangeDiff(v) {
+    if (!this.state.isSkillFixed) {
+      this.setState({ diff: v });
+      return;
+    }
+    var calcRate = (this.calcSkill() * 5.0) / v;
+    if (calcRate < 0.01 || 100.00 < calcRate) return;
+    this.setState({ diff: v, rate: calcRate });
+  }
+
+  handleChangeRate(v) {
+    if (!this.state.isSkillFixed) {
+      this.setState({ rate: v });
+      return;
+    }
+    var calcDiff = (this.calcSkill() * 5.0) / v;
+    if (calcDiff < 1.00 || 9.99 < calcDiff) return;
+    this.setState({ diff: calcDiff, rate: v });
+  }
+
   calcSkill() {
     return (this.state.diff / 5.0) * this.state.rate;
   }
@@ -25,7 +45,8 @@ class App extends React.Component {
           <Col xs={12} md={6} mdOffset={3}>
             <Checkbox
               checked={this.state.isSkillFixed}
-              onChange={e => this.setState({ isSkillFixed: e.target.checked })}>
+              onChange={e => this.setState({ isSkillFixed: e.target.checked })}
+            >
               {this.calcSkill().toFixed(2)}
             </Checkbox>
           </Col>
@@ -40,12 +61,7 @@ class App extends React.Component {
               min={1.00}
               max={9.99}
               step={0.05}
-              onChange={v => {
-                this.setState({ diff: v });
-                if (this.state.isSkillFixed) {
-                  this.setState({ rate: (this.calcSkill() * 5.0) / v});
-                }
-              }}
+              onChange={this.handleChangeDiff.bind(this)}
             />
           </Col>
         </Row>
@@ -56,15 +72,10 @@ class App extends React.Component {
           <Col xs={12} md={5}>
             <Slider
               value={this.state.rate}
-              min={0.00}
+              min={0.01}
               max={100.00}
               step={0.01}
-              onChange={v => {
-                this.setState({ rate: v })
-                if (this.state.isSkillFixed) {
-                  this.setState({ diff: (this.calcSkill() * 5.0) / v});
-                }
-              }}
+              onChange={this.handleChangeRate.bind(this)}
             />
           </Col>
         </Row>
