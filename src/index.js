@@ -12,6 +12,27 @@ const DIFF_MIN = 1.00;
 const RATE_MAX = 100.00;
 const RATE_MIN = 0.01;
 
+class Status extends React.Component {
+  render() {
+    return (
+      <ControlLabel>
+        <div style={{ position: "relative" }}>
+          <input type="checkbox"
+            checked={this.props.isSkillFixed}
+            onChange={this.props.onChange}
+            style={{ display: "none" }}
+          />
+          <img src={key} alt={"Locked"} />
+          <CircularProgressbar
+            percentage={100 * this.props.skill / 170.0}
+            textForPercentage={_ => this.props.skill.toFixed(2)}
+          />
+        </div>
+      </ControlLabel>
+    )
+  };
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +41,10 @@ class App extends React.Component {
       diff: 5.00,
       rate: 80.00,
     }
+  }
+
+  handleChangeIsFixed(e) {
+    this.setState({ isSkillFixed: e.target.checked });
   }
 
   handleChangeDiff(v) {
@@ -51,27 +76,12 @@ class App extends React.Component {
       <Grid fluid={true}>
         <Col xs={12}>
           <Grid>
-            <Col xs={12} sm={6}>
-              <Row>
-                <Col xs={10} xsOffset={1}>
-                  <ControlLabel>
-                    <div style={{ position: "relative" }}>
-                      <input type="checkbox"
-                        checked={this.state.isSkillFixed}
-                        onChange={e => {
-                          this.setState({ isSkillFixed: e.target.checked });
-                        }}
-                        style={{ display: "none" }}
-                      />
-                      <img src={key} alt={"Locked"} />
-                      <CircularProgressbar
-                        percentage={100 * this.calcSkill() / 170.0}
-                        textForPercentage={_ => this.calcSkill().toFixed(2)}
-                      />
-                    </div>
-                  </ControlLabel>
-                </Col>
-              </Row>
+            <Col xs={12} sm={6} style={{ textAlign: "center" }}>
+              <Status
+                isSkillFixed={this.state.isSkillFixed}
+                onChange={this.handleChangeIsFixed.bind(this)}
+                skill={this.calcSkill()}
+              />
             </Col>
             <Col xs={12} sm={6}>
               <Row>
