@@ -11,6 +11,7 @@ const DIFF_MAX = 9.99;
 const DIFF_MIN = 1.00;
 const RATE_MAX = 100.00;
 const RATE_MIN = 0.01;
+const RATE_MIN_DISP = 50.0;
 
 class Status extends React.Component {
   render() {
@@ -64,7 +65,7 @@ class RateSlider extends React.Component {
         <Col xs={12}>
           <Slider
             value={this.props.rate}
-            min={RATE_MIN}
+            min={RATE_MIN_DISP}
             max={RATE_MAX}
             step={0.01}
             marks={{63: "B", 73: "A", 80: "S", 95: "SS"}}
@@ -80,18 +81,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSkillFixed: false,
+      skill: {
+        isFixed: false,
+      },
       diff: 5.00,
       rate: 80.00,
     }
   }
 
   handleChangeIsFixed(e) {
-    this.setState({ isSkillFixed: e.target.checked });
+    this.setState({ skill: { isFixed: e.target.checked } });
   }
 
   handleChangeDiff(v) {
-    if (!this.state.isSkillFixed) {
+    if (!this.state.skill.isFixed) {
       this.setState({ diff: v });
       return;
     }
@@ -101,7 +104,7 @@ class App extends React.Component {
   }
 
   handleChangeRate(v) {
-    if (!this.state.isSkillFixed) {
+    if (!this.state.skill.isFixed) {
       this.setState({ rate: v });
       return;
     }
