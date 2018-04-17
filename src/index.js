@@ -15,7 +15,7 @@ const RATE_MIN = 0.01;
 class Status extends React.Component {
   render() {
     return (
-      <ControlLabel>
+      <ControlLabel style={{ display: "block", margin: "0 auto"}}>
         <div style={{ position: "relative" }}>
           <input type="checkbox"
             checked={this.props.isSkillFixed}
@@ -29,8 +29,51 @@ class Status extends React.Component {
           />
         </div>
       </ControlLabel>
-    )
-  };
+    );
+  }
+}
+
+class DifficultySlider extends React.Component {
+  render() {
+    return (
+      <div>
+        <Col xs={12}>
+          {this.props.diff.toFixed(2)}
+        </Col>
+        <Col xs={12}>
+          <Slider
+            value={this.props.diff}
+            min={DIFF_MIN}
+            max={DIFF_MAX}
+            step={0.05}
+            onChange={this.props.onChange}
+          />
+        </Col>
+      </div>
+    );
+  }
+}
+
+class RateSlider extends React.Component {
+  render() {
+    return (
+      <div>
+        <Col xs={12}>
+          {this.props.rate.toFixed(2)}
+        </Col>
+        <Col xs={12}>
+          <Slider
+            value={this.props.rate}
+            min={RATE_MIN}
+            max={RATE_MAX}
+            step={0.01}
+            marks={{63: "B", 73: "A", 80: "S", 95: "SS"}}
+            onChange={this.props.onChange}
+          />
+        </Col>
+      </div>
+    );
+  }
 }
 
 class App extends React.Component {
@@ -76,7 +119,7 @@ class App extends React.Component {
       <Grid fluid={true}>
         <Col xs={12}>
           <Grid>
-            <Col xs={12} sm={6} style={{ textAlign: "center" }}>
+            <Col xs={12} sm={6}>
               <Status
                 isSkillFixed={this.state.isSkillFixed}
                 onChange={this.handleChangeIsFixed.bind(this)}
@@ -85,32 +128,17 @@ class App extends React.Component {
             </Col>
             <Col xs={12} sm={6}>
               <Row>
-                <Col xs={12}>
-                  {this.state.diff.toFixed(2)}
-                </Col>
-                <Col xs={12}>
-                  <Slider
-                    value={this.state.diff}
-                    min={DIFF_MIN}
-                    max={DIFF_MAX}
-                    step={0.05}
-                    onChange={this.handleChangeDiff.bind(this)}
-                  />
-                </Col>
-                <Col xs={12}>
-                  {this.state.rate.toFixed(2)}
-                </Col>
-                <Col xs={12}>
-                  <Slider
-                    value={this.state.rate}
-                    min={RATE_MIN}
-                    max={RATE_MAX}
-                    step={0.01}
-                    marks={{63: "B", 73: "A", 80: "S", 95: "SS"}}
-                    onChange={this.handleChangeRate.bind(this)}
-                  />
-                </Col>
+                <DifficultySlider
+                  diff={this.state.diff}
+                  onChange={this.handleChangeDiff.bind(this)}
+                />
               </Row>
+              <Row>
+                <RateSlider
+                  rate={this.state.rate}
+                  onChange={this.handleChangeRate.bind(this)}
+                />
+             </Row>
             </Col>
           </Grid>
         </Col>
