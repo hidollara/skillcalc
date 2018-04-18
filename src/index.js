@@ -18,6 +18,7 @@ class Status extends React.Component {
       <ControlLabel style={{ display: "block", margin: "0 auto"}}>
         <CircularProgressbar
           percentage={this.props.rate}
+          textForPercentage={pct => pct < 100 ? `${pct}%` : "MAX"}
         />
       </ControlLabel>
     );
@@ -76,7 +77,7 @@ class App extends React.Component {
   }
 
   handleSkill(v) {
-    var diff = Math.max(this.state.diff, (v / 100) * 5.0);
+    var diff = Math.max(this.state.diff, (v / 100.0) * 5.0);
     this.setState({
       skill: v,
       diff: diff,
