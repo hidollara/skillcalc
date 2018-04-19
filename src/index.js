@@ -5,7 +5,6 @@ import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import key from './key.png';
 
 const SKILL_MAX = 199.00;
 const SKILL_MIN = 1.00;
