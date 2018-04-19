@@ -79,7 +79,7 @@ class SkillSlider extends React.Component {
         <div>
           <Slider
             value={this.props.skill}
-            min={1.00}
+            min={100.00}
             max={199.00}
             step={1.00}
             onChange={this.props.handler}
@@ -117,8 +117,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      skill: 80,
-      diff: 5.00,
+      skill: 140.00,
+      diff: 8.00,
     }
   }
 
