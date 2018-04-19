@@ -6,11 +6,6 @@ import 'react-circular-progressbar/dist/styles.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-const SKILL_MAX = 199.00;
-const SKILL_MIN = 1.00;
-const DIFF_MAX = 9.95;
-const DIFF_MIN = 1.00;
-
 class Status extends React.Component {
   render() {
     return (
@@ -27,41 +22,41 @@ class Status extends React.Component {
 class SkillSlider extends React.Component {
   render() {
     return (
-      <Row>
-        <Col xs={12}>
-          SKILL: {this.props.skill.toFixed(2)}
-        </Col>
-        <Col xs={12}>
+      <div>
+        <p>SKILL: {this.props.skill.toFixed(2)}</p>
+        <div>
           <Slider
             value={this.props.skill}
-            min={SKILL_MIN}
-            max={SKILL_MAX}
-            step={1.0}
+            min={1.00}
+            max={199.00}
+            step={1.00}
             onChange={this.props.handler}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
     );
   }
 }
 
 class DifficultySlider extends React.Component {
+  minimumDiff() {
+    return (this.props.skill / 100.0) * 5.0;
+  }
+
   render() {
     return (
-      <Row>
-        <Col xs={12}>
-          DIFF: {this.props.diff.toFixed(2)}
-        </Col>
-        <Col xs={12}>
+      <div>
+        <p>DIFF: {this.props.diff.toFixed(2)}</p>
+        <div>
           <Slider
             value={this.props.diff}
-            min={DIFF_MIN}
-            max={DIFF_MAX}
+            min={this.minimumDiff()}
+            max={9.95}
             step={0.05}
             onChange={this.props.handler}
           />
-        </Col>
-      </Row>
+        </div>
+      </div>
     );
   }
 }
@@ -75,23 +70,7 @@ class App extends React.Component {
     }
   }
 
-  handleSkill(v) {
-    var diff = Math.max(this.state.diff, (v / 100.0) * 5.0);
-    this.setState({
-      skill: v,
-      diff: diff,
-    });
-  }
-
-  handleDiff(v) {
-    var skill = Math.min(this.state.skill, (v / 5.0) * 100.0);
-    this.setState({
-      skill: skill,
-      diff: v,
-    });
-  }
-
-  calcRate() { return this.state.skill / (this.state.diff / 5.0); }
+  rate() { return (this.state.skill / (this.state.diff / 5.0)); }
 
   render() {
     return (
@@ -100,18 +79,25 @@ class App extends React.Component {
           <Grid>
             <Col xs={12} sm={6}>
               <Status
-                rate={this.calcRate().toFixed(2)}
+                rate={this.rate().toFixed(2)}
               />
             </Col>
             <Col xs={12} sm={6}>
-              <SkillSlider
-                skill={this.state.skill}
-                handler={this.handleSkill.bind(this)}
-              />
-              <DifficultySlider
-                diff={this.state.diff}
-                handler={this.handleDiff.bind(this)}
-              />
+              <Row>
+                <Col xs={12}>
+                  <SkillSlider
+                    skill={this.state.skill}
+                    handler={v => this.setState({ skill: v })}
+                  />
+                </Col>
+                <Col xs={12}>
+                  <DifficultySlider
+                    skill={this.state.skill}
+                    diff={this.state.diff}
+                    handler={v => this.setState({ diff: v })}
+                  />
+                </Col>
+              </Row>
             </Col>
           </Grid>
         </Col>
