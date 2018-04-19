@@ -1,0 +1,19 @@
+.status {
+  display: block;
+  margin: 0 auto;
+}
+
+.status.C .CircularProgressbar-path { stroke: url(#rankC); }
+.status.C .CircularProgressbar-text { fill: url(#rankC); }
+
+.status.B .CircularProgressbar-path { stroke: url(#rankB); }
+.status.B .CircularProgressbar-text { fill: url(#rankB); }
+
+.status.A .CircularProgressbar-path { stroke: url(#rankA); }
+.status.A .CircularProgressbar-text { fill:  url(#rankA); }
+
+.status.S .CircularProgressbar-path { stroke: url(#rankS); }
+.status.S .CircularProgressbar-text { fill: url(#rankS); }
+
+.status.SS .CircularProgressbar-path { stroke: url(#rankSS); }
+.status.SS .CircularProgressbar-text { fill: url(#rankSS); }

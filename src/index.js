@@ -3,13 +3,65 @@ import ReactDOM from 'react-dom';
 import { Grid, Row, Col, ControlLabel } from 'react-bootstrap';
 import CircularProgressbar from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import GradientSVG from './grad.js';
+import './status.css';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 class Status extends React.Component {
+  rank() {
+    return (
+      this.props.rate < 63.00 ? "C" :
+      this.props.rate < 73.00 ? "B" :
+      this.props.rate < 80.00 ? "A" :
+      this.props.rate < 95.00 ? "S" :
+      "SS"
+    );
+  }
+
   render() {
     return (
-      <ControlLabel style={{ display: "block", margin: "0 auto"}}>
+      <ControlLabel className={"status " + this.rank()}>
+        <GradientSVG
+          id={"rankC"}
+          stops={{
+            0: "#2fea59",
+            50: "#f9ec92",
+            100: "#2db55a",
+          }}
+        />
+        <GradientSVG
+          id={"rankB"}
+          stops={{
+            0: "#fa7f29",
+            50: "#fdf127",
+            100: "#e7772f",
+          }}
+        />
+        <GradientSVG
+          id={"rankA"}
+          stops={{
+            0: "#c50e18",
+            50: "#fdc5c4",
+            100: "#c50e18",
+          }}
+        />
+        <GradientSVG
+          id={"rankS"}
+          stops={{
+            0: "#eaac30",
+            50: "#fdf692",
+            100: "#fed342",
+          }}
+        />
+        <GradientSVG
+          id={"rankSS"}
+          stops={{
+            0: "#eaac30",
+            50: "#fdf692",
+            100: "#fed342",
+          }}
+        />
         <CircularProgressbar
           percentage={this.props.rate}
           textForPercentage={pct => pct < 100 ? `${pct}%` : "MAX"}
